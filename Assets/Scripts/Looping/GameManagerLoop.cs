@@ -53,7 +53,7 @@ public class GameManagerLoop : MonoBehaviour
                             for (int i = 0; i < moveDirectionLoop.count; i++)
                             {
                                 desiredPos = new Vector3(pointer.transform.position.x - 1f, pointer.transform.position.y, 0f);
-                                MovePointerAndDrawLine(desiredPos, Direction.Left);
+                                StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Left));
                                 yield return new WaitForSeconds(0.5f);
                             }
                             break;
@@ -63,7 +63,7 @@ public class GameManagerLoop : MonoBehaviour
                             for (int i = 0; i < moveDirectionLoop.count; i++)
                             {
                                 desiredPos = new Vector3(pointer.transform.position.x + 1f, pointer.transform.position.y, 0f);
-                                MovePointerAndDrawLine(desiredPos, Direction.Right);
+                                StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Right));
                                 yield return new WaitForSeconds(0.5f);
                             }
                             break;
@@ -73,7 +73,7 @@ public class GameManagerLoop : MonoBehaviour
                             for (int i = 0; i < moveDirectionLoop.count; i++)
                             {
                                 desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y + 1f, 0f);
-                                MovePointerAndDrawLine(desiredPos, Direction.Up);
+                                StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Up));
                                 yield return new WaitForSeconds(0.5f);
                             }
                             break;
@@ -83,7 +83,7 @@ public class GameManagerLoop : MonoBehaviour
                             for (int i = 0; i < moveDirectionLoop.count; i++)
                             {
                                 desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y - 1f, 0f);
-                                MovePointerAndDrawLine(desiredPos, Direction.Down);
+                                StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Down));
                                 yield return new WaitForSeconds(0.5f);
                             }
                             break;
@@ -99,25 +99,25 @@ public class GameManagerLoop : MonoBehaviour
                         case Direction.Left:
                             //Left move position
                             desiredPos = new Vector3(pointer.transform.position.x - 1f, pointer.transform.position.y, 0f);
-                            MovePointerAndDrawLine(desiredPos, Direction.Left);
+                            StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Left));
                             break;
 
                         case Direction.Right:
                             //RIght move position
                             desiredPos = new Vector3(pointer.transform.position.x + 1f, pointer.transform.position.y, 0f);
-                            MovePointerAndDrawLine(desiredPos, Direction.Right);
+                            StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Right));
                             break;
 
                         case Direction.Up:
                             //Up move position
                             desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y + 1f, 0f);
-                            MovePointerAndDrawLine(desiredPos, Direction.Up);
+                            StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Up));
                             break;
 
                         case Direction.Down:
                             //Down move position
                             desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y - 1f, 0f);
-                            MovePointerAndDrawLine(desiredPos, Direction.Down);
+                            StartCoroutine(MovePointerAndDrawLine(desiredPos, Direction.Down));
                             break;
                     }
 
@@ -131,13 +131,14 @@ public class GameManagerLoop : MonoBehaviour
     }
 
     //Move pointer object to next position and draw line
-    void MovePointerAndDrawLine(Vector3 movePos, Direction dir)
+    IEnumerator MovePointerAndDrawLine(Vector3 movePos, Direction dir)
     {
         //Checking position is inside the point grid
         if ((movePos.x >= 0f && movePos.x <= 3f) && (movePos.y >= 0f && movePos.y <= 3f))
         {
             //Moving pointer
             pointer.transform.DOMove(movePos, 0.5f);
+            yield return new WaitForSeconds(0.15f);
 
             //Drawing line
             lineCount++;

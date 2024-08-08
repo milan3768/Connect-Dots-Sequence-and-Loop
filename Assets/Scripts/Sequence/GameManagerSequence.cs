@@ -45,25 +45,25 @@ public class GameManagerSequence : MonoBehaviour
                     case Direction.Left:
                         //Left move position
                         desiredPos = new Vector3(pointer.transform.position.x - 1f, pointer.transform.position.y, 0f);
-                        MovePointerAndDrawPattern(desiredPos, Direction.Left);
+                        StartCoroutine(MovePointerAndDrawPattern(desiredPos, Direction.Left));
                         break;
 
                     case Direction.Right:
                         //Right move position
                         desiredPos = new Vector3(pointer.transform.position.x + 1f, pointer.transform.position.y, 0f);
-                        MovePointerAndDrawPattern(desiredPos, Direction.Right);
+                        StartCoroutine(MovePointerAndDrawPattern(desiredPos, Direction.Right));
                         break;
 
                     case Direction.Up:
                         //Up move position
                         desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y + 1f, 0f);
-                        MovePointerAndDrawPattern(desiredPos, Direction.Up);
+                        StartCoroutine(MovePointerAndDrawPattern(desiredPos, Direction.Up));
                         break;
 
                     case Direction.Down:
                         //Down move position
                         desiredPos = new Vector3(pointer.transform.position.x, pointer.transform.position.y - 1f, 0f);
-                        MovePointerAndDrawPattern(desiredPos, Direction.Down);
+                        StartCoroutine(MovePointerAndDrawPattern(desiredPos, Direction.Down));
                         break;
                 }
                 yield return new WaitForSeconds(0.5f);
@@ -75,13 +75,14 @@ public class GameManagerSequence : MonoBehaviour
     }
 
     //Move pointer object to next position and draw line
-    void MovePointerAndDrawPattern(Vector3 movePos, Direction dir)
+    IEnumerator MovePointerAndDrawPattern(Vector3 movePos, Direction dir)
     {
         //Checking position is inside the point grid
         if ((movePos.x >= 0f && movePos.x <= 3f) && (movePos.y >= 0f && movePos.y <= 3f))
         {
             //Moving pointer
             pointer.transform.DOMove(movePos, 0.5f);
+            yield return new WaitForSeconds(0.15f);
 
             //Drawing line
             lineCount++;
